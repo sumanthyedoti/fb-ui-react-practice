@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Properties extends Component {
-  render() {
-    return (
-      <div>
-        <p>likes comments share</p>
-      </div>
-    );
-  }
+const Properties = (props) => {
+  const {likes , comments} = props;
+  return (
+    <div className = 'item-props'>
+      <span className='likes'>{likes} likes</span>
+      <span className='comments'>{comments.length} {comments.length===1 ? 'comment' : 'comments'}</span>
+    </div>
+  );
 }
 
 export default Properties;

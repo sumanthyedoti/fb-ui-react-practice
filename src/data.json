@@ -1,10 +1,12 @@
 [
   {
+    "post_id": 1,
     "post_by": "Page1",
     "item_description" : "This is a text only item",
-    "image" : "",
-    "created_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)",
+    "images" : "",
+    "posted_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)",
     "likes" : 10,
+    "isLiked": false,
     "comments" : 
       [
         {
@@ -18,11 +20,13 @@
       ]
   },
   {
+    "post_id": 2,
     "post_by": "Page2",
     "item_description" : "This is an item with an image",
-    "image" : "/images/image.png",
+    "images" : "/images/post1.jpg",
     "likes" : 20,
-    "created_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)",
+    "isLiked": true,
+    "posted_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)",
     "comments" : 
       [
         {

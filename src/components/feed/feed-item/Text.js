@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Text extends Component {
-  render() {
+const Text = (props) => {
+    const { text, isOnlyText } = props;
+    console.log(isOnlyText)
     return (
-        <p>feed-item text</p>
+        <p 
+          className={ isOnlyText ? 'only-text item-text' : 'item-text'} 
+        >{ text }</p>
     );
-  }
 }
 
 export default Text;
