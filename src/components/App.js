@@ -27,7 +27,7 @@ class App extends Component {
               {
                 "comment_id": 2,
                 "commented_by": "O0ps Guy",
-                "comment" : "Java is Love!!!!! <3",
+                "comment" : "Java is Love!!!!! ❤️",
                 "created_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)"
               }
             ]
@@ -131,18 +131,56 @@ class App extends Component {
           "posted_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)",
           "comments" : 
             []
+        },
+        {
+          "post_id": 8,
+          "post_by": "Movie Buzz",
+          "item_description" : "C/o kancharapalem, cult movie with brilliant screenplay from telugu. Best regional film. Characters travel with us. Climax thrills...👏 👏 👏 👏",
+          "images" : "/images/post10.jpg",
+          "likes" : 54,
+          "isLiked": true,
+          "posted_at" : "Fri May 10 2018 15:23:36 GMT+0530 (IST)",
+          "comments" : 
+            []
         }
       ],
     };
   }
+  testerHandler = (e) => {
+    let filteredFeedData=[];
+    if(e.target.value==='image'){
+      filteredFeedData = this.state.feedData.filter((item) => {
+        return (item.images!=='' && item.item_description==='') 
+      });
+    } else if(e.target.value==='text'){
+      filteredFeedData = this.state.feedData.filter((item) => {
+        return (item.item_description!=='' && item.images==='') 
+      });
+    } else if(e.target.value==='both'){
+      filteredFeedData = this.state.feedData.filter((item) => {
+        return (item.item_description!=='' && item.images!=='') 
+      });
+    } else if(e.target.value==='0'){
+      filteredFeedData = this.state.feedData;
+    }
+    this.setState({
+      filteredFeedData,
+    })
+  }
+  componentWillMount(){
+    this.setState({
+      filteredFeedData : this.state.feedData
+    })
+  }
   render() {
-    const {feedData} = this.state;
+    const {filteredFeedData} = this.state;
     return (
       <>
       <Header />
       <div className ='main'>
         <Feed 
-          feedData = {feedData}
+          feedData = {filteredFeedData}
+          testerHandler={this.testerHandler}
         />
       </div>
       </>

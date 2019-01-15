@@ -7,26 +7,25 @@ class Feed extends Component {
     this.state = {
       feedData : this.props.feedData,
     };
-    this.likeHandler = this.likeHandler.bind(this);
-    this.commentHandler = this.commentHandler.bind(this);
-    this.testerHandler = this.testerHandler.bind(this);
   }
-  likeHandler(post_id){
+  likeHandler = (postId) => {
     let feedData = this.state.feedData.map((item) => {
-      if(item.isLiked && item.post_id===post_id) {
-        item.likes-=1;
-        item.isLiked = !item.isLiked; 
-      }else if(item.post_id===post_id){
-        item.likes+=1;
-        item.isLiked = !item.isLiked;
+      let itemNew = {...item};
+      if(itemNew.isLiked && itemNew.post_id===postId) {
+        itemNew.likes-=1;
+        itemNew.isLiked = !itemNew.isLiked; 
+      }else if(itemNew.post_id===postId){
+        console.log('ll');
+        itemNew.likes+=1;
+        itemNew.isLiked = !itemNew.isLiked;
       }
-      return item;
+      return itemNew;
     });
     this.setState({
-      feedData,
+      feedData
     })
   }
-  commentHandler(e){
+  commentHandler = (e) => {
     if(e.keyCode===13) {
       const postId = Number(e.target.dataset.key);
       let feedData = this.state.feedData.map((item) => {
@@ -46,29 +45,15 @@ class Feed extends Component {
       e.target.value='';
     }
   }
-  testerHandler(e){
-    let feedData=[];
-    if(e.target.value==='image'){
-      feedData = this.props.feedData.filter((item) => {
-        return (item.images!=='' && item.item_description==='') 
-      });
-    } else if(e.target.value==='text'){
-      feedData = this.props.feedData.filter((item) => {
-        return (item.item_description!=='' && item.images==='') 
-      });
-    } else if(e.target.value==='both'){
-      feedData = this.props.feedData.filter((item) => {
-        return (item.item_description!=='' && item.images!=='') 
-      });
-    } else if(e.target.value==='0'){
-      feedData = this.props.feedData;
-    }
+  componentWillReceiveProps(state, props){
+    console.log(state)
     this.setState({
-      feedData,
+      feedData: state.feedData
     })
   }
   render() {
     const { feedData } = this.state;
+    const { testerHandler} = this.props;
     const feedItems = feedData.map((item) => {
           return (
             <FeedItem 
@@ -82,7 +67,7 @@ class Feed extends Component {
     
     return (
       <div className ='feed'>
-        <Tester onChange={this.testerHandler}/>
+        <Tester onChange={testerHandler}/>
         { feedItems }
       </div>
     );
