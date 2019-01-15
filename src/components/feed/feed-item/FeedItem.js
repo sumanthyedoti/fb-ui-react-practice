@@ -3,9 +3,9 @@ import Text from './Text'
 import Images from './Images'
 import Panel from './item-panel/Panel'
 const FeedItem = props => {
-  const { itemData, likeHandler} = props;
+  const { itemData, likeHandler, commentHandler} = props;
   const date = new Date(itemData.posted_at).toString();
-  const dateStr = `${date.substring(0, 15)} at ${date.substring(16, 21)}`
+  const dateStr = `${date.substring(0, 15)} at ${date.substring(16, 21)}`;
   return (
     <div className ='feed-item'>
       <p className = 'post-by'>{itemData.post_by}</p>
@@ -18,6 +18,7 @@ const FeedItem = props => {
         isLiked = {itemData.isLiked}
         comments = {itemData.comments}
         likeHandler = {likeHandler}
+        commentHandler = {commentHandler}
       />
     </div>
   );
