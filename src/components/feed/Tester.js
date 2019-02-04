@@ -3,7 +3,7 @@ import React from 'react';
 const Tester = props =>{
   return (
     <div className = 'tester'>
-      <select name="cars" onChange={props.onChange}>
+      <select name="cars" onChange={props.onChange} id='filter'>
       <option value="0">select filter</option>
         <option value="text">Text only</option>
         <option value="image">Images only</option>
