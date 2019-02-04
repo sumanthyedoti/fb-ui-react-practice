@@ -1,59 +1,24 @@
 import React, { Component } from 'react';
 import Tester from './Tester';
 import FeedItem from './feed-item/FeedItem'
+import {connect} from 'react-redux'
+import {filterFeedAction, likeAction, commentAction} from '../../store/actions/actions';
 class Feed extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      feedData : this.props.feedData,
-    };
-  }
   likeHandler = (postId) => {
-    let feedData = this.state.feedData.map((item) => {
-      let itemNew = {...item};
-      if(itemNew.isLiked && itemNew.post_id===postId) {
-        itemNew.likes-=1;
-        itemNew.isLiked = !itemNew.isLiked; 
-      }else if(itemNew.post_id===postId){
-        console.log('ll');
-        itemNew.likes+=1;
-        itemNew.isLiked = !itemNew.isLiked;
-      }
-      return itemNew;
-    });
-    this.setState({
-      feedData
-    })
+    this.props.onLike(postId)
   }
   commentHandler = (e) => {
     if(e.keyCode===13) {
-      const postId = Number(e.target.dataset.key);
-      let feedData = this.state.feedData.map((item) => {
-        if(item.post_id===postId) {
-          item.comments.push({
-            "comment_id": item.comments.length+1,
-            "commented_by": "Yedoti Sumanth",
-            "comment" : e.target.value,
-            "created_at" : new Date(),
-          })
-        }
-        return item;
-      });
-      this.setState({
-        feedData,
-      })
+      this.props.onComment({id:e.target.dataset.key, value: e.target.value})
       e.target.value='';
     }
   }
-  componentWillReceiveProps(state, props){
-    console.log(state)
-    this.setState({
-      feedData: state.feedData
-    })
+  testerHandler=(e)=>{
+    this.props.onFilterFeed(e.target.value);
   }
-  render() {
-    const { feedData } = this.state;
-    const { testerHandler} = this.props;
+  render() {    
+    // console.log(this.props);
+    const feedData = this.props.feedData;
     const feedItems = feedData.map((item) => {
           return (
             <FeedItem 
@@ -65,13 +30,23 @@ class Feed extends Component {
           );
     });
     
-    return (
+    return(
       <div className ='feed'>
-        <Tester onChange={testerHandler}/>
+        <Tester onChange={this.testerHandler}/>
         { feedItems }
       </div>
     );
   }
 }
-
-export default Feed;
+const mapStateToProps = (state) =>{
+  console.log(state)
+  return {
+    feedData: state.filteredFeedData
+  }
+}
+const mapActionsToProps=({
+    onFilterFeed: filterFeedAction,
+    onLike: likeAction,
+    onComment: commentAction
+})
+export default connect(mapStateToProps, mapActionsToProps)(Feed);
